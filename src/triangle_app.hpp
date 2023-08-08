@@ -16,20 +16,28 @@ private:
   void initWindow();
   void initVulkan();
 
+  // Instance Creation
   void createInstance();
+
+  // Device Selection
+  void pickPhysicalDevice();
 
   void mainLoop();
   void cleanup();
 
 private:
-  void cleanWindow();
-  void cleanVulkan();
-
   void getRequiredInstanceExtensions(
     uint32_t *extCount,
     const char ***exts);
 
 private:
+  void cleanWindow();
+  void cleanVulkan();
+
+  void cleanVulkanInstance();
+
+private:
   decltype(glfwCreateWindow(0, 0, "", nullptr, nullptr)) window;
   VkInstance instance;
+  VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 };
