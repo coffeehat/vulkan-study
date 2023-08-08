@@ -5,7 +5,7 @@ void HelloTriangleApplication::initWindow() {
   // GLFW_CLIENT_API is the attribute to set, GLFW_NO_API is the value
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
   glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // so this is no resizable
-  window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan demo", nullptr, nullptr);
+  m_window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan demo", nullptr, nullptr);
 }
 
 void HelloTriangleApplication::getRequiredInstanceExtensions(
@@ -16,6 +16,6 @@ void HelloTriangleApplication::getRequiredInstanceExtensions(
 }
 
 void HelloTriangleApplication::cleanWindow() {
-  glfwDestroyWindow(window);
+  glfwDestroyWindow(m_window);
   glfwTerminate();
 }

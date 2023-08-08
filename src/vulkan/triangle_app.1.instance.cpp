@@ -21,11 +21,11 @@ void HelloTriangleApplication::createInstance() {
   createInfo.ppEnabledExtensionNames = exts;
   createInfo.enabledLayerCount = 0;
 
-  if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
+  if (vkCreateInstance(&createInfo, nullptr, &m_instance) != VK_SUCCESS) {
     throw std::runtime_error("Failed to create instance!");
   }
 }
 
 void HelloTriangleApplication::cleanVulkanInstance() {
-  vkDestroyInstance(instance, nullptr);
+  vkDestroyInstance(m_instance, nullptr);
 }

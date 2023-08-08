@@ -8,7 +8,7 @@ void HelloTriangleApplication::run() {
 }
 
 void HelloTriangleApplication::mainLoop() {
-  while (!glfwWindowShouldClose(window)) {
+  while (!glfwWindowShouldClose(m_window)) {
     glfwPollEvents();
   }
 }
