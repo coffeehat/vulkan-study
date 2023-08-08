@@ -12,5 +12,9 @@ find_package(glm REQUIRED)
 add_executable(window_test window_test.cpp)
 target_link_libraries(window_test PRIVATE glfw glm::glm vulkan::vulkan)
 
-add_executable(demo demo.cpp)
+add_executable(demo
+  demo.cpp
+  triangle_app.cpp
+  glfw/triangle_app.glfw.cpp
+  vulkan/triangle_app.vulkan.cpp)
 target_link_libraries(demo PRIVATE glfw glm::glm vulkan::vulkan)
