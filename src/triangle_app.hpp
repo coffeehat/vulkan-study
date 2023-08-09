@@ -19,9 +19,10 @@ const uint32_t HEIGHT = 600;
 
 struct QueueFamilyIndices {
   std::optional<uint32_t> graphicsFamily;
+  std::optional<uint32_t> presentFamily;
 
   bool isComplete() {
-    return graphicsFamily.has_value();
+    return graphicsFamily.has_value() && presentFamily.has_value();
   }
 };
 
@@ -81,6 +82,7 @@ private:
   // Logical Device and Queue
   VkDevice m_device;
   VkQueue m_graphicQueue;
+  VkQueue m_presentQueue;
 };
 
 #endif // _SRC_TRIANGLE_APP_HPP_
