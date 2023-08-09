@@ -1,5 +1,8 @@
 #include "../triangle_app.hpp"
 
+#include <algorithm>
+#include <set>
+
 void HelloTriangleApplication::pickPhysicalDevice() {
   uint32_t deviceCount = 0;
   vkEnumeratePhysicalDevices(m_instance, &deviceCount, nullptr);
@@ -32,13 +35,30 @@ bool HelloTriangleApplication::isDeviceSuitable(const VkPhysicalDevice &device) 
 
   if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU &&
       deviceFeatures.geometryShader &&
-      indices.isComplete()) {
+      indices.isComplete() &&
+      checkDeviceExtensionSupport(device)) {
     m_queueFamilyIndices = indices;
     std::cout << "[Physical Device Selection]: Choose " << deviceProperties.deviceName << std::endl;
     return true;
   } else {
     return false;
   }
+}
+
+bool HelloTriangleApplication::checkDeviceExtensionSupport(const VkPhysicalDevice &device) {
+  uint32_t extensionCount;
+  vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+
+  std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+  vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+
+  std::set<std::string> requiredExtensions(deviceExtensions.cbegin(), deviceExtensions.cend());
+  for (const auto &extension : availableExtensions) {
+    std::cout << extension.extensionName << std::endl;
+    requiredExtensions.erase(extension.extensionName);
+  }
+  
+  return requiredExtensions.empty();
 }
 
 QueueFamilyIndices HelloTriangleApplication::findQueueFamilies(const VkPhysicalDevice &device) {

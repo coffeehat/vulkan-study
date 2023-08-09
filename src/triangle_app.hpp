@@ -17,6 +17,10 @@
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 
+const std::vector<const char*> deviceExtensions {
+  VK_KHR_SWAPCHAIN_EXTENSION_NAME
+};
+
 struct QueueFamilyIndices {
   std::optional<uint32_t> graphicsFamily;
   std::optional<uint32_t> presentFamily;
@@ -56,6 +60,7 @@ private:
 
   bool isDeviceSuitable(const VkPhysicalDevice &device);
   QueueFamilyIndices findQueueFamilies(const VkPhysicalDevice &device);
+  bool checkDeviceExtensionSupport(const VkPhysicalDevice &device);
 
 private:
   void cleanWindow();

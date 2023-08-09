@@ -39,9 +39,13 @@ void HelloTriangleApplication::createLogicalDevice() {
   createInfo.pEnabledFeatures = &deviceFeatures;
 
   // Extension Info
-  createInfo.enabledExtensionCount = 0;
+  // Why add VK_KHR_swapchain here, rather than vkInstance creation? I don't know
+  createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
+  createInfo.ppEnabledExtensionNames = deviceExtensions.data();
   
   // Layer Info
+  // Preivous implementations of Vulkan made a distinction between instance and device specific validation layers
+  // But this is no longer the case
   createInfo.enabledLayerCount = 0;
 
   if (vkCreateDevice(m_physicalDevice, &createInfo, nullptr, &m_device) != VK_SUCCESS) {
