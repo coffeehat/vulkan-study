@@ -1,8 +1,12 @@
 #ifndef _SRC_TRIANGLE_APP_HPP_
 #define _SRC_TRIANGLE_APP_HPP_
 
+#define VK_USE_PLATFORM_XLIB_KHR
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
+
+#define GLFW_EXPOSE_NATIVE_X11
+#include <GLFW/glfw3native.h>
 
 #include <cstdlib>
 #include <iostream>
@@ -32,6 +36,9 @@ private:
   // Instance Creation
   void createInstance();
 
+  // Surface and swapchain
+  void createSurface();
+
   // Device Selection
   void pickPhysicalDevice();
 
@@ -54,6 +61,7 @@ private:
   void cleanVulkan();
 
   void cleanVulkanInstance();
+  void cleanVulkanSurface();
   void cleanVulkanLogicalDevice();
 
 private:
@@ -62,6 +70,9 @@ private:
   
   // Vulkan
   VkInstance m_instance;
+
+  // WSI related
+  VkSurfaceKHR m_surface;
   
   // Physical device selection related
   VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
