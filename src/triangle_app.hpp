@@ -30,6 +30,12 @@ struct QueueFamilyIndices {
   }
 };
 
+struct SurfaceProperties {
+  VkSurfaceCapabilitiesKHR capabilities;
+  std::vector<VkSurfaceFormatKHR> formats;
+  std::vector<VkPresentModeKHR> presentModes;
+};
+
 class HelloTriangleApplication {
 public:
   void run();
@@ -50,6 +56,9 @@ private:
   // Create Logical Device and Queue
   void createLogicalDevice();
 
+  // Create Swapchain
+  void createSwapChain();
+
   void mainLoop();
   void cleanup();
 
@@ -58,16 +67,20 @@ private:
     uint32_t *extCount,
     const char ***exts);
 
-  bool isDeviceSuitable(const VkPhysicalDevice &device);
-  QueueFamilyIndices findQueueFamilies(const VkPhysicalDevice &device);
-  bool checkDeviceExtensionSupport(const VkPhysicalDevice &device);
-
+  bool isDeviceSuitable(const VkPhysicalDevice &physicalDevice);
+  QueueFamilyIndices findQueueFamilies(const VkPhysicalDevice &physicalDevice);
+  bool checkDeviceExtensionSupport(const VkPhysicalDevice &physicalDevice);
+  SurfaceProperties querySurfaceProperties(const VkPhysicalDevice &physicalDevice);
+  VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+  VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentMdoes);
+  VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
 private:
   void cleanWindow();
   void cleanVulkan();
 
   void cleanVulkanInstance();
   void cleanVulkanSurface();
+  void cleanSwapChain();
   void cleanVulkanLogicalDevice();
 
 private:
@@ -79,6 +92,11 @@ private:
 
   // WSI related
   VkSurfaceKHR m_surface;
+  VkSwapchainKHR m_swapchain;
+  std::vector<VkImage> m_swapchainImages;
+  VkFormat m_swapchainImageFormat;
+  VkExtent2D m_swapchainExtent;
+  SurfaceProperties m_surfaceProperties;
   
   // Physical device selection related
   VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;

@@ -21,3 +21,24 @@ void HelloTriangleApplication::createSurface() {
 void HelloTriangleApplication::cleanVulkanSurface() {
   vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
 }
+
+SurfaceProperties HelloTriangleApplication::querySurfaceProperties(const VkPhysicalDevice &physicalDevice) {
+  SurfaceProperties details;
+
+  // Query Supported Surface Capabilities
+  vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, m_surface, &details.capabilities);
+
+  // Query Supported Formats
+  uint32_t formatCount;
+  vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, m_surface, &formatCount, nullptr);
+  details.formats.resize(formatCount);
+  vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, m_surface, &formatCount, details.formats.data());
+
+  // Query Supported Present Modes
+  uint32_t presentModeCount;
+  vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, m_surface, &presentModeCount, nullptr);
+  details.presentModes.resize(presentModeCount);
+  vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, m_surface, &presentModeCount, details.presentModes.data());
+
+  return details;
+}

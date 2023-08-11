@@ -5,9 +5,11 @@ void HelloTriangleApplication::initVulkan() {
   createSurface();
   pickPhysicalDevice();
   createLogicalDevice();
+  createSwapChain();
 }
 
 void HelloTriangleApplication::cleanVulkan() {
+  cleanSwapChain();
   cleanVulkanLogicalDevice();
   cleanVulkanSurface();
   cleanVulkanInstance();

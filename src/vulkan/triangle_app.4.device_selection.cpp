@@ -25,19 +25,32 @@ void HelloTriangleApplication::pickPhysicalDevice() {
   }
 }
 
-bool HelloTriangleApplication::isDeviceSuitable(const VkPhysicalDevice &device) {
+bool HelloTriangleApplication::isDeviceSuitable(const VkPhysicalDevice &physicalDevice) {
   VkPhysicalDeviceProperties deviceProperties;
   VkPhysicalDeviceFeatures deviceFeatures;
-  vkGetPhysicalDeviceProperties(device, &deviceProperties);
-  vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+  vkGetPhysicalDeviceProperties(physicalDevice, &deviceProperties);
+  vkGetPhysicalDeviceFeatures(physicalDevice, &deviceFeatures);
 
-  QueueFamilyIndices indices = findQueueFamilies(device);
+  // Support Needed Queue Families?
+  QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+
+  // Support Needed Extension?
+  bool extensionSupported = checkDeviceExtensionSupport(physicalDevice);
+
+  // Support at Least One Swapchain format?
+  bool swapChainAdequate = false;
+  SurfaceProperties surfaceProperties = querySurfaceProperties(physicalDevice);
+  if (extensionSupported) {
+    swapChainAdequate = !surfaceProperties.formats.empty() && !surfaceProperties.presentModes.empty();
+  }
 
   if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU &&
       deviceFeatures.geometryShader &&
       indices.isComplete() &&
-      checkDeviceExtensionSupport(device)) {
+      extensionSupported &&
+      swapChainAdequate) {
     m_queueFamilyIndices = indices;
+    m_surfaceProperties = surfaceProperties;
     std::cout << "[Physical Device Selection]: Choose " << deviceProperties.deviceName << std::endl;
     return true;
   } else {
@@ -45,12 +58,12 @@ bool HelloTriangleApplication::isDeviceSuitable(const VkPhysicalDevice &device) 
   }
 }
 
-bool HelloTriangleApplication::checkDeviceExtensionSupport(const VkPhysicalDevice &device) {
+bool HelloTriangleApplication::checkDeviceExtensionSupport(const VkPhysicalDevice &physicalDevice) {
   uint32_t extensionCount;
-  vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+  vkEnumerateDeviceExtensionProperties(physicalDevice, nullptr, &extensionCount, nullptr);
 
   std::vector<VkExtensionProperties> availableExtensions(extensionCount);
-  vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+  vkEnumerateDeviceExtensionProperties(physicalDevice, nullptr, &extensionCount, availableExtensions.data());
 
   std::set<std::string> requiredExtensions(deviceExtensions.cbegin(), deviceExtensions.cend());
   for (const auto &extension : availableExtensions) {
@@ -61,13 +74,13 @@ bool HelloTriangleApplication::checkDeviceExtensionSupport(const VkPhysicalDevic
   return requiredExtensions.empty();
 }
 
-QueueFamilyIndices HelloTriangleApplication::findQueueFamilies(const VkPhysicalDevice &device) {
+QueueFamilyIndices HelloTriangleApplication::findQueueFamilies(const VkPhysicalDevice &physicalDevice) {
   QueueFamilyIndices indices;
   uint32_t queueFamilyCount = 0;
-  vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+  vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, nullptr);
 
   std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-  vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+  vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, queueFamilies.data());
 
   int i = 0;
   for (const auto &queueFamily : queueFamilies) {
@@ -75,7 +88,7 @@ QueueFamilyIndices HelloTriangleApplication::findQueueFamilies(const VkPhysicalD
       indices.graphicsFamily = i;
     }
     VkBool32 presentSupport = false;
-    vkGetPhysicalDeviceSurfaceSupportKHR(device, i, m_surface, &presentSupport);
+    vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, i, m_surface, &presentSupport);
     if (presentSupport) {
       indices.presentFamily = i;
     }
