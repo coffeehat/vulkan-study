@@ -70,7 +70,7 @@ private:
   bool isDeviceSuitable(const VkPhysicalDevice &physicalDevice);
   QueueFamilyIndices findQueueFamilies(const VkPhysicalDevice &physicalDevice);
   bool checkDeviceExtensionSupport(const VkPhysicalDevice &physicalDevice);
-  SurfaceProperties querySurfaceProperties(const VkPhysicalDevice &physicalDevice);
+  SurfaceProperties querySurfaceSupportedProperties(const VkPhysicalDevice &physicalDevice);
   VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
   VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentMdoes);
   VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);

@@ -22,7 +22,7 @@ void HelloTriangleApplication::cleanVulkanSurface() {
   vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
 }
 
-SurfaceProperties HelloTriangleApplication::querySurfaceProperties(const VkPhysicalDevice &physicalDevice) {
+SurfaceProperties HelloTriangleApplication::querySurfaceSupportedProperties(const VkPhysicalDevice &physicalDevice) {
   SurfaceProperties details;
 
   // Query Supported Surface Capabilities

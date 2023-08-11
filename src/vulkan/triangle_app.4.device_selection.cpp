@@ -39,7 +39,7 @@ bool HelloTriangleApplication::isDeviceSuitable(const VkPhysicalDevice &physical
 
   // Support at Least One Swapchain format?
   bool swapChainAdequate = false;
-  SurfaceProperties surfaceProperties = querySurfaceProperties(physicalDevice);
+  SurfaceProperties surfaceProperties = querySurfaceSupportedProperties(physicalDevice);
   if (extensionSupported) {
     swapChainAdequate = !surfaceProperties.formats.empty() && !surfaceProperties.presentModes.empty();
   }
