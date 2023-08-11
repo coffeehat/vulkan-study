@@ -6,11 +6,13 @@ void HelloTriangleApplication::initVulkan() {
   pickPhysicalDevice();
   createLogicalDevice();
   createSwapChain();
+  createImageViews();
 }
 
 void HelloTriangleApplication::cleanVulkan() {
+  cleanImageViews();
   cleanSwapChain();
-  cleanVulkanLogicalDevice();
-  cleanVulkanSurface();
-  cleanVulkanInstance();
+  cleanLogicalDevice();
+  cleanSurface();
+  cleanInstance();
 }

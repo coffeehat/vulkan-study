@@ -26,6 +26,6 @@ void HelloTriangleApplication::createInstance() {
   }
 }
 
-void HelloTriangleApplication::cleanVulkanInstance() {
+void HelloTriangleApplication::cleanInstance() {
   vkDestroyInstance(m_instance, nullptr);
 }

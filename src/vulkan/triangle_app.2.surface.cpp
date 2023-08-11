@@ -18,7 +18,7 @@ void HelloTriangleApplication::createSurface() {
   }
 }
 
-void HelloTriangleApplication::cleanVulkanSurface() {
+void HelloTriangleApplication::cleanSurface() {
   vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
 }
 

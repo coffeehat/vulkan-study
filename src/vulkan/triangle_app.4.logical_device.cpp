@@ -57,6 +57,6 @@ void HelloTriangleApplication::createLogicalDevice() {
   vkGetDeviceQueue(m_device, m_queueFamilyIndices.presentFamily.value(), 0, &m_presentQueue);
 }
 
-void HelloTriangleApplication::cleanVulkanLogicalDevice() {
+void HelloTriangleApplication::cleanLogicalDevice() {
   vkDestroyDevice(m_device, nullptr);
 }

@@ -19,8 +19,9 @@ add_executable(demo
   vulkan/triangle_app.0.vulkan.cpp
   vulkan/triangle_app.1.instance.cpp
   vulkan/triangle_app.2.surface.cpp
-  vulkan/triangle_app.3.swapchain.cpp
-  vulkan/triangle_app.4.device_selection.cpp
-  vulkan/triangle_app.5.logical_device.cpp)
+  vulkan/triangle_app.3.device_selection.cpp
+  vulkan/triangle_app.4.logical_device.cpp
+  vulkan/triangle_app.5.swapchain.cpp
+  vulkan/triangle_app.6.image_views.cpp)
 target_link_libraries(demo PRIVATE glfw glm::glm vulkan::vulkan)
 target_compile_features(demo PRIVATE cxx_std_17)

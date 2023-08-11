@@ -47,7 +47,7 @@ private:
   // Instance Creation
   void createInstance();
 
-  // Surface and swapchain
+  // Surface
   void createSurface();
 
   // Device Selection
@@ -58,6 +58,9 @@ private:
 
   // Create Swapchain
   void createSwapChain();
+
+  // Create Image Views
+  void createImageViews();
 
   void mainLoop();
   void cleanup();
@@ -78,10 +81,11 @@ private:
   void cleanWindow();
   void cleanVulkan();
 
-  void cleanVulkanInstance();
-  void cleanVulkanSurface();
+  void cleanInstance();
+  void cleanSurface();
+  void cleanLogicalDevice();
   void cleanSwapChain();
-  void cleanVulkanLogicalDevice();
+  void cleanImageViews();
 
 private:
   // GLFW
@@ -91,12 +95,16 @@ private:
   VkInstance m_instance;
 
   // WSI related
+  // - surface
   VkSurfaceKHR m_surface;
+  SurfaceProperties m_surfaceProperties;
+  // - swapchain
   VkSwapchainKHR m_swapchain;
   std::vector<VkImage> m_swapchainImages;
   VkFormat m_swapchainImageFormat;
   VkExtent2D m_swapchainExtent;
-  SurfaceProperties m_surfaceProperties;
+  // - swapchain imageviews
+  std::vector<VkImageView> m_swapchainImageViews;
   
   // Physical device selection related
   VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
