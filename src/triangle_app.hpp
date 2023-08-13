@@ -85,6 +85,9 @@ private:
   // Create Image Views
   void createImageViews();
 
+  // Create Render Pass
+  void createRenderPass();
+
   // Create Graphics Pipeline
   void createGraphicsPipeline();
   
@@ -114,6 +117,7 @@ private:
   void cleanSwapChain();
   void cleanImageViews();
 
+  void cleanRenderPass();
   void cleanGraphicsPipeline();
 private:
   // GLFW
@@ -142,6 +146,9 @@ private:
   VkDevice m_device;
   VkQueue m_graphicQueue;
   VkQueue m_presentQueue;
+
+  // Render Pass
+  VkRenderPass m_renderPass;
 
   // Pipeline Layout
   VkPipelineLayout m_pipelineLayout;
