@@ -113,6 +113,8 @@ private:
   void cleanLogicalDevice();
   void cleanSwapChain();
   void cleanImageViews();
+
+  void cleanGraphicsPipeline();
 private:
   // GLFW
   decltype(glfwCreateWindow(0, 0, "", nullptr, nullptr)) m_window;
@@ -140,6 +142,9 @@ private:
   VkDevice m_device;
   VkQueue m_graphicQueue;
   VkQueue m_presentQueue;
+
+  // Pipeline Layout
+  VkPipelineLayout m_pipelineLayout;
 };
 
 #endif // _SRC_TRIANGLE_APP_HPP_

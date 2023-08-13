@@ -7,9 +7,11 @@ void HelloTriangleApplication::initVulkan() {
   createLogicalDevice();
   createSwapChain();
   createImageViews();
+  createGraphicsPipeline();
 }
 
 void HelloTriangleApplication::cleanVulkan() {
+  cleanGraphicsPipeline();
   cleanImageViews();
   cleanSwapChain();
   cleanLogicalDevice();
