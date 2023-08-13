@@ -103,6 +103,7 @@ private:
   VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
   VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentMdoes);
   VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
+  VkShaderModule createShaderModule(const std::vector<char> &code);
 private:
   void cleanWindow();
   void cleanVulkan();
@@ -112,7 +113,6 @@ private:
   void cleanLogicalDevice();
   void cleanSwapChain();
   void cleanImageViews();
-
 private:
   // GLFW
   decltype(glfwCreateWindow(0, 0, "", nullptr, nullptr)) m_window;
