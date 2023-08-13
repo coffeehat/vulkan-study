@@ -6,5 +6,6 @@ function (generate_shader_binname_from_srcname SHADER_SRC_NAME SHADER_BIN_NAME)
   else(EXT)
     string(CONCAT SHADER_BIN_NAME_TEMP ${SHADER_SRC_NAME} ".spv")
   endif(EXT)
+  # This is a trick to return a value
   set(${SHADER_BIN_NAME} ${SHADER_BIN_NAME_TEMP} PARENT_SCOPE)
 endfunction()

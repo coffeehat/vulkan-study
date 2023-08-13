@@ -41,6 +41,7 @@ set(SHADER_BUILD_PATH "${CMAKE_CURRENT_BINARY_DIR}/shaders")
 foreach(GLSL ${GLSL_SOURCE_FILES})
   generate_shader_binname_from_srcname(${GLSL} BIN_NAME)
   set(SPIRV "${SHADER_BUILD_PATH}/${BIN_NAME}")
+  # For what is custom command, please see https://zhuanlan.zhihu.com/p/95771200
   add_custom_command(
     OUTPUT ${SPIRV}
     COMMAND ${CMAKE_COMMAND} -E make_directory "${SHADER_BUILD_PATH}"
@@ -49,6 +50,7 @@ foreach(GLSL ${GLSL_SOURCE_FILES})
   list(APPEND SPIRV_BINARY_FILES ${SPIRV})
 endforeach(GLSL)
 
+# For what is custom target, please see https://zhuanlan.zhihu.com/p/95771200
 add_custom_target(
   shaders
   DEPENDS ${SPIRV_BINARY_FILES}
@@ -56,6 +58,8 @@ add_custom_target(
 
 add_dependencies(demo shaders)
 
+# For visual studio, because of it will create direction for different configuration
+# We need to explicit copy the spv file to the configuration destination
 add_custom_command(TARGET demo POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:demo>/shaders/"
   COMMAND ${CMAKE_COMMAND} -E copy_directory
