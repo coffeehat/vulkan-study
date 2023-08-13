@@ -1,12 +1,35 @@
 #ifndef _SRC_TRIANGLE_APP_HPP_
 #define _SRC_TRIANGLE_APP_HPP_
 
-#define VK_USE_PLATFORM_XLIB_KHR
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
+/*
+    __linux__       Defined on Linux
+    __sun           Defined on Solaris
+    __FreeBSD__     Defined on FreeBSD
+    __NetBSD__      Defined on NetBSD
+    __OpenBSD__     Defined on OpenBSD
+    __APPLE__       Defined on Mac OS X
+    __hpux          Defined on HP-UX
+    __osf__         Defined on Tru64 UNIX (formerly DEC OSF1)
+    __sgi           Defined on Irix
+    _AIX            Defined on AIX
+    _WIN32          Defined on Windows
+*/
 
-#define GLFW_EXPOSE_NATIVE_X11
-#include <GLFW/glfw3native.h>
+#ifdef _WIN32
+  #define VK_USE_PLATFORM_WIN32_KHR
+  #define GLFW_INCLUDE_VULKAN
+  #include <GLFW/glfw3.h>
+  
+  #define GLFW_EXPOSE_NATIVE_WIN32
+  #include <GLFW/glfw3native.h>
+#elif __linux__
+  #define VK_USE_PLATFORM_XLIB_KHR
+  #define GLFW_INCLUDE_VULKAN
+  #include <GLFW/glfw3.h>
+
+  #define GLFW_EXPOSE_NATIVE_X11
+  #include <GLFW/glfw3native.h>
+#endif
 
 #include <cstdlib>
 #include <iostream>

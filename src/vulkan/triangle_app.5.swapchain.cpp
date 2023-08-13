@@ -117,7 +117,9 @@ VkPresentModeKHR HelloTriangleApplication::chooseSwapPresentMode(
 
 VkExtent2D HelloTriangleApplication::chooseSwapExtent(
     const VkSurfaceCapabilitiesKHR &capabilities) {
-  if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
+  // Use parenthesis here to avoid MSVC build issue
+  // Ref: https://stackoverflow.com/a/27443191
+  if (capabilities.currentExtent.width != (std::numeric_limits<uint32_t>::max)()) {
     return capabilities.currentExtent;
   } else {
     // if capabilities == maximum value of uint32_t, that is window manager do allow us to differ the resolution

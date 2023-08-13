@@ -32,7 +32,7 @@ void HelloTriangleApplication::createLogicalDevice() {
   createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
   
   // Queue Info
-  createInfo.queueCreateInfoCount = queueCreateInfos.size();
+  createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
   createInfo.pQueueCreateInfos = queueCreateInfos.data();
   
   // Feature Enablement Info
