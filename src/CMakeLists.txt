@@ -2,18 +2,18 @@ cmake_minimum_required(VERSION 3.5)
 
 project(vulkan_study)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
+# set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
 if(MSVC)
   add_link_options(/NODEFAULTLIB:MSVCRT)
 endif()
 
 # Find Dependencies
-find_package(vulkan REQUIRED)
+find_package(Vulkan REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
 
 add_executable(window_test window_test.cpp)
-target_link_libraries(window_test PRIVATE glfw glm::glm vulkan::vulkan)
+target_link_libraries(window_test PRIVATE glfw glm::glm Vulkan::Vulkan)
 
 add_executable(demo
   demo.cpp
@@ -26,5 +26,5 @@ add_executable(demo
   vulkan/triangle_app.4.logical_device.cpp
   vulkan/triangle_app.5.swapchain.cpp
   vulkan/triangle_app.6.image_views.cpp)
-target_link_libraries(demo PRIVATE glfw glm::glm vulkan::vulkan)
+target_link_libraries(demo PRIVATE glfw glm::glm Vulkan::Vulkan)
 target_compile_features(demo PRIVATE cxx_std_17)
