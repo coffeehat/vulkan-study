@@ -12,8 +12,8 @@ void HelloTriangleApplication::initVulkan() {
 }
 
 void HelloTriangleApplication::cleanVulkan() {
-  cleanRenderPass();
   cleanGraphicsPipeline();
+  cleanRenderPass();
   cleanImageViews();
   cleanSwapChain();
   cleanLogicalDevice();

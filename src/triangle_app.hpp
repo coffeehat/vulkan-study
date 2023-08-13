@@ -152,6 +152,9 @@ private:
 
   // Pipeline Layout
   VkPipelineLayout m_pipelineLayout;
+
+  // Graphic Pipeline
+  VkPipeline m_graphicsPipeline;
 };
 
 #endif // _SRC_TRIANGLE_APP_HPP_

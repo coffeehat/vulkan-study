@@ -145,11 +145,52 @@ void HelloTriangleApplication::createGraphicsPipeline() {
         throw std::runtime_error("failed to create pipeline layout!");
     }
 
+/*
+    We can now combine all of the structures and objects from the previous 
+    chapters to create the graphics pipeline! Here's the types of objects we 
+    have now, as a quick recap:
+    * Shader stages: the shader modules that define the functionality of the programmable 
+        stages of the graphics pipeline
+    * Fixed-function state: all of the structures that define the fixed-function 
+        stages of the pipeline, like input assembly, rasterizer, viewport and color blending
+    * Pipeline layout: the uniform and push values referenced by the shader that 
+        can be updated at draw time
+    * Render pass: the attachments referenced by the pipeline stages and their usage
+*/
+    VkGraphicsPipelineCreateInfo pipelineInfo{};
+    pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+    // Shader stages
+    pipelineInfo.stageCount = 2;
+    pipelineInfo.pStages = shaderStages;
+    // Fixed-funtions
+    pipelineInfo.pVertexInputState = &vertexInputInfo;
+    pipelineInfo.pInputAssemblyState = &inputAssembly;
+    // pipelineInfo.pViewportState = &viewportState;
+    pipelineInfo.pRasterizationState = &rasterizer;
+    pipelineInfo.pMultisampleState = &multisampling;
+    pipelineInfo.pDepthStencilState = nullptr; // Optional
+    pipelineInfo.pColorBlendState = &colorBlending;
+    pipelineInfo.pDynamicState = &dynamicState;
+    // Pipeline Layout
+    pipelineInfo.layout = m_pipelineLayout;
+    // Render Pass
+    pipelineInfo.renderPass = m_renderPass;
+    pipelineInfo.subpass = 0;
+    
+    // For Pipeline inherit
+    pipelineInfo.basePipelineHandle = VK_NULL_HANDLE; // Optional
+    pipelineInfo.basePipelineIndex = -1; // Optional
+
+    if (vkCreateGraphicsPipelines(m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_graphicsPipeline) != VK_SUCCESS) {
+        throw std::runtime_error("failed to create graphics pipeline!");
+    }
+
     vkDestroyShaderModule(m_device, fragShaderModule, nullptr);
     vkDestroyShaderModule(m_device, vertShaderModule, nullptr);
 }
 
 void HelloTriangleApplication::cleanGraphicsPipeline() {
+    vkDestroyPipeline(m_device, m_graphicsPipeline, nullptr);
     vkDestroyPipelineLayout(m_device, m_pipelineLayout, nullptr);
 }
 
