@@ -85,6 +85,9 @@ private:
   // Create Image Views
   void createImageViews();
 
+  // Create Graphics Pipeline
+  void createGraphicsPipeline();
+  
   void mainLoop();
   void cleanup();
 
