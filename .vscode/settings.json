@@ -61,5 +61,6 @@
     "memory_resource": "cpp",
     "random": "cpp",
     "string": "cpp"
-  }
+  },
+  "cmake.configureOnOpen": false
 }

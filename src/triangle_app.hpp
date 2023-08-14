@@ -90,6 +90,9 @@ private:
 
   // Create Graphics Pipeline
   void createGraphicsPipeline();
+
+  // Create Frame Buffers
+  void createFramebuffers();
   
   void mainLoop();
   void cleanup();
@@ -119,6 +122,7 @@ private:
 
   void cleanRenderPass();
   void cleanGraphicsPipeline();
+  void cleanFramebuffers();
 private:
   // GLFW
   decltype(glfwCreateWindow(0, 0, "", nullptr, nullptr)) m_window;
@@ -155,6 +159,9 @@ private:
 
   // Graphic Pipeline
   VkPipeline m_graphicsPipeline;
+
+  // Framebuffer
+  std::vector<VkFramebuffer> m_swapchainFramebuffers;
 };
 
 #endif // _SRC_TRIANGLE_APP_HPP_

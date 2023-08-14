@@ -29,7 +29,8 @@ add_executable(demo
   vulkan/triangle_app.5.swapchain.cpp
   vulkan/triangle_app.6.image_views.cpp
   vulkan/triangle_app.7.render_pass.cpp
-  vulkan/triangle_app.8.graphics_pipeline.cpp)
+  vulkan/triangle_app.8.graphics_pipeline.cpp
+  vulkan/triangle_app.9.frame_buffers.cpp)
 target_link_libraries(demo PRIVATE glfw glm::glm Vulkan::Vulkan)
 target_compile_features(demo PRIVATE cxx_std_17)
 

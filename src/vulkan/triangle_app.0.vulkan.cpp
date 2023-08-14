@@ -9,9 +9,11 @@ void HelloTriangleApplication::initVulkan() {
   createImageViews();
   createRenderPass();
   createGraphicsPipeline();
+  createFramebuffers();
 }
 
 void HelloTriangleApplication::cleanVulkan() {
+  cleanFramebuffers();
   cleanGraphicsPipeline();
   cleanRenderPass();
   cleanImageViews();
