@@ -93,7 +93,13 @@ private:
 
   // Create Frame Buffers
   void createFramebuffers();
+
+  // Create Command Pool
+  void createCommandPool();
   
+  // Create Command Buffer
+  void createCommandBuffer();
+
   void mainLoop();
   void cleanup();
 
@@ -110,6 +116,7 @@ private:
   VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentMdoes);
   VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
   VkShaderModule createShaderModule(const std::vector<char> &code);
+  void recordCommandBuffer(VkCommandBuffer &commandBuffer, uint32_t imageIndex);
 private:
   void cleanWindow();
   void cleanVulkan();
@@ -123,6 +130,8 @@ private:
   void cleanRenderPass();
   void cleanGraphicsPipeline();
   void cleanFramebuffers();
+  void cleanCommandPool();
+  void cleanCommandBuffer();
 private:
   // GLFW
   decltype(glfwCreateWindow(0, 0, "", nullptr, nullptr)) m_window;
@@ -162,6 +171,12 @@ private:
 
   // Framebuffer
   std::vector<VkFramebuffer> m_swapchainFramebuffers;
+
+  // Command Pool
+  VkCommandPool m_commandPool;
+
+  // Command Buffer
+  VkCommandBuffer m_commandBuffer;
 };
 
 #endif // _SRC_TRIANGLE_APP_HPP_

@@ -30,7 +30,9 @@ add_executable(demo
   vulkan/triangle_app.6.image_views.cpp
   vulkan/triangle_app.7.render_pass.cpp
   vulkan/triangle_app.8.graphics_pipeline.cpp
-  vulkan/triangle_app.9.frame_buffers.cpp)
+  vulkan/triangle_app.9.frame_buffers.cpp
+  vulkan/triangle_app.10.create_commandpool.cpp
+  vulkan/triangle_app.11.create_command_buffer.cpp)
 target_link_libraries(demo PRIVATE glfw glm::glm Vulkan::Vulkan)
 target_compile_features(demo PRIVATE cxx_std_17)
 

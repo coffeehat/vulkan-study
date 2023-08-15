@@ -10,6 +10,8 @@ void HelloTriangleApplication::initVulkan() {
   createRenderPass();
   createGraphicsPipeline();
   createFramebuffers();
+  createCommandPool();
+  createCommandBuffer();
 }
 
 void HelloTriangleApplication::cleanVulkan() {
@@ -21,4 +23,6 @@ void HelloTriangleApplication::cleanVulkan() {
   cleanLogicalDevice();
   cleanSurface();
   cleanInstance();
+  cleanCommandPool();
+  cleanCommandBuffer();
 }
