@@ -16,23 +16,15 @@ find_package(glm REQUIRED)
 add_executable(window_test window_test.cpp)
 target_link_libraries(window_test PRIVATE glfw glm::glm Vulkan::Vulkan)
 
+file(GLOB VULKAN_CORE_FILES "vulkan/*")
+
 # Target demo
 add_executable(demo
   demo.cpp
   triangle_app.cpp
   glfw/triangle_app.glfw.cpp
-  vulkan/triangle_app.0.vulkan.cpp
-  vulkan/triangle_app.1.instance.cpp
-  vulkan/triangle_app.2.surface.cpp
-  vulkan/triangle_app.3.device_selection.cpp
-  vulkan/triangle_app.4.logical_device.cpp
-  vulkan/triangle_app.5.swapchain.cpp
-  vulkan/triangle_app.6.image_views.cpp
-  vulkan/triangle_app.7.render_pass.cpp
-  vulkan/triangle_app.8.graphics_pipeline.cpp
-  vulkan/triangle_app.9.frame_buffers.cpp
-  vulkan/triangle_app.10.create_commandpool.cpp
-  vulkan/triangle_app.11.create_command_buffer.cpp)
+  ${VULKAN_CORE_FILES}
+  )
 target_link_libraries(demo PRIVATE glfw glm::glm Vulkan::Vulkan)
 target_compile_features(demo PRIVATE cxx_std_17)
 

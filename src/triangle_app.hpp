@@ -100,7 +100,10 @@ private:
   // Create Command Buffer
   void createCommandBuffer();
 
+  void createSyncObjects();
+
   void mainLoop();
+  void drawFrame();
   void cleanup();
 
 private:
@@ -132,6 +135,7 @@ private:
   void cleanFramebuffers();
   void cleanCommandPool();
   void cleanCommandBuffer();
+  void cleanSyncObjects();
 private:
   // GLFW
   decltype(glfwCreateWindow(0, 0, "", nullptr, nullptr)) m_window;
@@ -177,6 +181,11 @@ private:
 
   // Command Buffer
   VkCommandBuffer m_commandBuffer;
+
+  // Semaphore
+  VkSemaphore m_imageAvailableSemaphore;
+  VkSemaphore m_renderFinishedSemaphore;
+  VkFence m_inFlightFence;
 };
 
 #endif // _SRC_TRIANGLE_APP_HPP_
