@@ -10,7 +10,10 @@ void HelloTriangleApplication::run() {
 void HelloTriangleApplication::mainLoop() {
   while (!glfwWindowShouldClose(m_window)) {
     glfwPollEvents();
+    drawFrame();
   }
+
+  vkDeviceWaitIdle(m_device);
 }
 
 void HelloTriangleApplication::drawFrame() {
@@ -23,6 +26,7 @@ void HelloTriangleApplication::drawFrame() {
   vkResetCommandBuffer(m_commandBuffer, 0);
   recordCommandBuffer(m_commandBuffer, imageIndex);
 
+  // Submit render command buffer
   VkSubmitInfo submitInfo{};
   submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
@@ -41,6 +45,21 @@ void HelloTriangleApplication::drawFrame() {
   if (vkQueueSubmit(m_graphicQueue, 1, &submitInfo, m_inFlightFence) != VK_SUCCESS) {
       throw std::runtime_error("failed to submit draw command buffer!");
   }
+
+  // Submit present command
+  VkPresentInfoKHR presentInfo{};
+  presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+
+  presentInfo.waitSemaphoreCount = 1;
+  presentInfo.pWaitSemaphores = signalSemaphores;
+
+  VkSwapchainKHR swapChains[] = {m_swapchain};
+  presentInfo.swapchainCount = 1;
+  presentInfo.pSwapchains = swapChains;
+  presentInfo.pImageIndices = &imageIndex;
+  presentInfo.pResults = nullptr; // Optional
+
+  vkQueuePresentKHR(m_presentQueue, &presentInfo);
 }
 
 void HelloTriangleApplication::cleanup() {
