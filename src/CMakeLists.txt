@@ -16,7 +16,7 @@ find_package(glm REQUIRED)
 add_executable(window_test window_test.cpp)
 target_link_libraries(window_test PRIVATE glfw glm::glm Vulkan::Vulkan)
 
-file(GLOB_RECURSE VULKAN_CORE_FILES "vulkan/*")
+file(GLOB_RECURSE VULKAN_CORE_FILES "vulkan/*.cpp")
 
 # Target demo
 add_executable(demo

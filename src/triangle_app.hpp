@@ -100,6 +100,9 @@ private:
   // Create Command Buffer
   void createCommandBuffer();
 
+  // Create Vertex Buffer
+  void createVertexBuffer();
+
   void createSyncObjects();
 
   void mainLoop();
@@ -120,6 +123,7 @@ private:
   VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
   VkShaderModule createShaderModule(const std::vector<char> &code);
   void recordCommandBuffer(VkCommandBuffer &commandBuffer, uint32_t imageIndex);
+  uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 private:
   void cleanWindow();
   void cleanVulkan();
@@ -135,6 +139,7 @@ private:
   void cleanFramebuffers();
   void cleanCommandPool();
   void cleanCommandBuffer();
+  void cleanVertexBuffer();
   void cleanSyncObjects();
 private:
   // GLFW
@@ -181,6 +186,10 @@ private:
 
   // Command Buffer
   VkCommandBuffer m_commandBuffer;
+
+  // Vertex Buffer
+  VkBuffer m_vertexBuffer;
+  VkDeviceMemory m_vertexBufferMemory;
 
   // Semaphore
   VkSemaphore m_imageAvailableSemaphore;

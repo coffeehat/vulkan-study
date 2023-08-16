@@ -33,6 +33,7 @@ void HelloTriangleApplication::recordCommandBuffer(VkCommandBuffer &commandBuffe
     vkCmdBeginRenderPass(commandBuffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
     vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_graphicsPipeline);
+    
     VkViewport viewport{};
     viewport.x = 0.0f;
     viewport.y = 0.0f;
@@ -46,6 +47,10 @@ void HelloTriangleApplication::recordCommandBuffer(VkCommandBuffer &commandBuffe
     scissor.offset = {0, 0};
     scissor.extent = m_swapchainExtent;
     vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
+
+    VkBuffer vertexBuffers[] = {m_vertexBuffer};
+    VkDeviceSize offsets[] = {0};
+    vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 
     // `vkCmdDraw`:
     //  - vertexCount
