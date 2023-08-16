@@ -123,6 +123,7 @@ private:
   VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
   VkShaderModule createShaderModule(const std::vector<char> &code);
   void recordCommandBuffer(VkCommandBuffer &commandBuffer, uint32_t imageIndex);
+  void copyBuffer(const VkBuffer &srcBuffer, const VkBuffer &dstBuffer, const VkDeviceSize size);
 private:
   void cleanWindow();
   void cleanVulkan();
