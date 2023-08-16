@@ -25,9 +25,14 @@ void HelloTriangleApplication::initVulkan() {
   createCommandPool();
   std::cout << "Run Create Command Buffer" << std::endl;
   createCommandBuffer();
+  std::cout << "Run Create Sync Objects" << std::endl;
+  createSyncObjects();
 }
 
 void HelloTriangleApplication::cleanVulkan() {
+  cleanSyncObjects();
+  cleanCommandBuffer();
+  cleanCommandPool();
   cleanFramebuffers();
   cleanGraphicsPipeline();
   cleanRenderPass();
@@ -36,6 +41,4 @@ void HelloTriangleApplication::cleanVulkan() {
   cleanLogicalDevice();
   cleanSurface();
   cleanInstance();
-  cleanCommandPool();
-  cleanCommandBuffer();
 }
