@@ -1,5 +1,5 @@
-#ifndef _SRC_VULKAN_BUFFERS_VERTEX_H__
-#define _SRC_VULKAN_BUFFERS_VERTEX_H__
+#ifndef __SRC_VULKAN_BUFFERS_VERTEX_H__
+#define __SRC_VULKAN_BUFFERS_VERTEX_H__
 
 #include <array>
 #include <vector>
@@ -38,4 +38,4 @@ struct Vertex {
 
 extern const std::vector<Vertex> vertices;
 
-#endif // _SRC_VULKAN_BUFFERS_VERTEX_H__
+#endif // __SRC_VULKAN_BUFFERS_VERTEX_H__
