@@ -103,6 +103,9 @@ private:
   // Create Vertex Buffer
   void createVertexBuffer();
 
+  // Create Index Buffer
+  void createIndexBuffer();
+
   void createSyncObjects();
 
   void mainLoop();
@@ -140,6 +143,7 @@ private:
   void cleanCommandPool();
   void cleanCommandBuffer();
   void cleanVertexBuffer();
+  void cleanIndexBuffer();
   void cleanSyncObjects();
 private:
   // GLFW
@@ -190,6 +194,10 @@ private:
   // Vertex Buffer
   VkBuffer m_vertexBuffer;
   VkDeviceMemory m_vertexBufferMemory;
+
+  // Index Buffer
+  VkBuffer m_indexBuffer;
+  VkDeviceMemory m_indexBufferMemory;
 
   // Semaphore
   VkSemaphore m_imageAvailableSemaphore;

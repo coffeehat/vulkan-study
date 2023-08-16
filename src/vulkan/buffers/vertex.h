@@ -37,5 +37,6 @@ struct Vertex {
 };
 
 extern const std::vector<Vertex> vertices;
+extern const std::vector<uint16_t> indices;
 
 #endif // __SRC_VULKAN_BUFFERS_VERTEX_H__

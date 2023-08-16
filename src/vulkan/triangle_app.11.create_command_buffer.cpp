@@ -1,5 +1,7 @@
 #include "../triangle_app.hpp"
 
+#include "buffers/index.h"
+
 void HelloTriangleApplication::createCommandBuffer() {
     VkCommandBufferAllocateInfo allocInfo{};
     allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -52,12 +54,14 @@ void HelloTriangleApplication::recordCommandBuffer(VkCommandBuffer &commandBuffe
     VkDeviceSize offsets[] = {0};
     vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 
+    vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer, 0, VK_INDEX_TYPE_UINT16);
+
     // `vkCmdDraw`:
     //  - vertexCount
     //  - instanceCount
     //  - firstVertex
     //  - firstInstance
-    vkCmdDraw(commandBuffer, 3, 1, 0, 0);
+    vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 
     vkCmdEndRenderPass(commandBuffer);
 
