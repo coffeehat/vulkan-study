@@ -80,6 +80,7 @@ private:
   void createGraphicsPipeline();
   void createFramebuffers();
   void createCommandPool();
+  void createTextureImage();
   void createCommandBuffers();
   void createVertexBuffer();
   void createIndexBuffer();
@@ -108,6 +109,18 @@ private:
   void recordCommandBuffer(VkCommandBuffer &commandBuffer, uint32_t imageIndex);
   void copyBuffer(const VkBuffer &srcBuffer, const VkBuffer &dstBuffer, const VkDeviceSize size);
   void updateUniformBuffer(const uint32_t currentImage);
+  VkCommandBuffer beginSingleTimeCommands();
+  void endSingleTimeCommands(VkCommandBuffer &commandBuffer);
+  void transitionImageLayout(
+    VkImage                         *image, 
+    const VkFormat                  &format, 
+    const VkImageLayout             &oldLayout, 
+    const VkImageLayout             &newLayout);
+  void copyBufferToImage(
+    const VkBuffer                  &buffer, 
+    VkImage                         *image, 
+    const uint32_t                  width, 
+    const uint32_t                  height);
 private:
   void cleanWindow();
   void cleanVulkan();
@@ -123,7 +136,7 @@ private:
   void cleanGraphicsPipeline();
   void cleanFramebuffers();
   void cleanCommandPool();
-  void cleanCommandBuffer();
+  void cleanTextureImage();
   void cleanUniformBuffers();
   void cleanVertexBuffer();
   void cleanIndexBuffer();
@@ -180,6 +193,9 @@ private:
   std::vector<VkBuffer> m_uniformBuffers;
   std::vector<VkDeviceMemory> m_uniformBuffersMemory;
   std::vector<void*> m_uniformBuffersMapped;
+
+  VkImage m_textureImage;
+  VkDeviceMemory m_textureImageMemory;
 
   VkDescriptorPool m_descriptorPool;
   std::vector<VkDescriptorSet> m_descriptorSets;

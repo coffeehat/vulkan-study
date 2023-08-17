@@ -25,6 +25,8 @@ void HelloTriangleApplication::initVulkan() {
   createFramebuffers();
   std::cout << "Run Create Command Pool" << std::endl;
   createCommandPool();
+  std::cout << "Run Create Texture Image" << std::endl;
+  createTextureImage();
   std::cout << "Run Create Vertex Buffer" << std::endl;
   createVertexBuffer();
   std::cout << "Run Create Index Buffer" << std::endl;
@@ -43,12 +45,12 @@ void HelloTriangleApplication::initVulkan() {
 
 void HelloTriangleApplication::cleanVulkan() {
   cleanSyncObjects();
-  cleanCommandBuffer();
   cleanCommandPool();
   cleanFramebuffers();
   cleanGraphicsPipeline();
   cleanRenderPass();
   cleanImageViews();
+  cleanTextureImage();
   cleanDescriptorPool();
   cleanDescriptorSetLayout();
   cleanSwapChain();

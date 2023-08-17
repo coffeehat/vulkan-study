@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 include(cmake/utils.cmake)
 project(vulkan_study)
 
-# set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
 # if(MSVC)
 #   add_link_options(/NODEFAULTLIB:MSVCRT)
 # endif()
@@ -11,6 +11,7 @@ project(vulkan_study)
 find_package(Vulkan REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
+find_package(stb REQUIRED)
 
 # Target test
 add_executable(window_test window_test.cpp)
@@ -25,7 +26,7 @@ add_executable(demo
   glfw/triangle_app.glfw.cpp
   ${VULKAN_CORE_FILES}
   )
-target_link_libraries(demo PRIVATE glfw glm::glm Vulkan::Vulkan)
+target_link_libraries(demo PRIVATE glfw glm::glm Vulkan::Vulkan std)
 target_compile_features(demo PRIVATE cxx_std_17)
 
 # - Compile shaders for target demo
@@ -61,4 +62,7 @@ add_custom_command(TARGET demo POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${SHADER_BUILD_PATH}"
     "$<TARGET_FILE_DIR:demo>/shaders"
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${SHADER_BUILD_PATH}"
+    "$<TARGET_FILE_DIR:demo>/textures"
   COMMAND ${CMAKE_COMMAND} -E remove_directory "${SHADER_BUILD_PATH}")
