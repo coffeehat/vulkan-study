@@ -17,32 +17,32 @@ void HelloTriangleApplication::mainLoop() {
 }
 
 void HelloTriangleApplication::drawFrame() {
-  vkWaitForFences(m_device, 1, &m_inFlightFence, VK_TRUE, UINT64_MAX);
-  vkResetFences(m_device, 1, &m_inFlightFence);
+  vkWaitForFences(m_device, 1, &m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
+  vkResetFences(m_device, 1, &m_inFlightFences[m_currentFrame]);
 
   uint32_t imageIndex;
-  vkAcquireNextImageKHR(m_device, m_swapchain, UINT64_MAX, m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
+  vkAcquireNextImageKHR(m_device, m_swapchain, UINT64_MAX, m_imageAvailableSemaphores[m_currentFrame], VK_NULL_HANDLE, &imageIndex);
 
-  vkResetCommandBuffer(m_commandBuffer, 0);
-  recordCommandBuffer(m_commandBuffer, imageIndex);
+  vkResetCommandBuffer(m_commandBuffers[m_currentFrame], 0);
+  recordCommandBuffer(m_commandBuffers[m_currentFrame], imageIndex);
 
   // Submit render command buffer
   VkSubmitInfo submitInfo{};
   submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-  VkSemaphore waitSemaphores[] = {m_imageAvailableSemaphore};
+  VkSemaphore waitSemaphores[] = {m_imageAvailableSemaphores[m_currentFrame]};
   VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
   submitInfo.waitSemaphoreCount = 1;
   submitInfo.pWaitSemaphores = waitSemaphores;
   submitInfo.pWaitDstStageMask = waitStages;
   submitInfo.commandBufferCount = 1;
-  submitInfo.pCommandBuffers = &m_commandBuffer;
+  submitInfo.pCommandBuffers = &m_commandBuffers[m_currentFrame];
 
-  VkSemaphore signalSemaphores[] = {m_renderFinishedSemaphore};
+  VkSemaphore signalSemaphores[] = {m_renderFinishedSemaphores[m_currentFrame]};
   submitInfo.signalSemaphoreCount = 1;
   submitInfo.pSignalSemaphores = signalSemaphores;
 
-  if (vkQueueSubmit(m_graphicQueue, 1, &submitInfo, m_inFlightFence) != VK_SUCCESS) {
+  if (vkQueueSubmit(m_graphicQueue, 1, &submitInfo, m_inFlightFences[m_currentFrame]) != VK_SUCCESS) {
       throw std::runtime_error("failed to submit draw command buffer!");
   }
 
@@ -60,6 +60,8 @@ void HelloTriangleApplication::drawFrame() {
   presentInfo.pResults = nullptr; // Optional
 
   vkQueuePresentKHR(m_presentQueue, &presentInfo);
+
+  m_currentFrame = (m_currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 }
 
 void HelloTriangleApplication::cleanup() {

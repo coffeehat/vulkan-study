@@ -37,6 +37,8 @@
 #include <stdexcept>
 #include <vector>
 
+const int MAX_FRAMES_IN_FLIGHT = 2;
+
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 
@@ -98,7 +100,7 @@ private:
   void createCommandPool();
   
   // Create Command Buffer
-  void createCommandBuffer();
+  void createCommandBuffers();
 
   // Create Vertex Buffer
   void createVertexBuffer();
@@ -189,7 +191,7 @@ private:
   VkCommandPool m_commandPool;
 
   // Command Buffer
-  VkCommandBuffer m_commandBuffer;
+  std::vector<VkCommandBuffer> m_commandBuffers;
 
   // Vertex Buffer
   VkBuffer m_vertexBuffer;
@@ -200,9 +202,12 @@ private:
   VkDeviceMemory m_indexBufferMemory;
 
   // Semaphore
-  VkSemaphore m_imageAvailableSemaphore;
-  VkSemaphore m_renderFinishedSemaphore;
-  VkFence m_inFlightFence;
+  std::vector<VkSemaphore> m_imageAvailableSemaphores;
+  std::vector<VkSemaphore> m_renderFinishedSemaphores;
+  std::vector<VkFence> m_inFlightFences;
+
+private:
+  uint32_t m_currentFrame = 0;
 };
 
 #endif // _SRC_TRIANGLE_APP_HPP_

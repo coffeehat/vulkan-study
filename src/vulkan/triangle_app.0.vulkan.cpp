@@ -28,7 +28,7 @@ void HelloTriangleApplication::initVulkan() {
   std::cout << "Run Create Index Buffer" << std::endl;
   createIndexBuffer();
   std::cout << "Run Create Command Buffer" << std::endl;
-  createCommandBuffer();
+  createCommandBuffers();
   std::cout << "Run Create Sync Objects" << std::endl;
   createSyncObjects();
 }
