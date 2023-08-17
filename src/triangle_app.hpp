@@ -69,45 +69,23 @@ private:
   void initWindow();
   void initVulkan();
 
-  // Instance Creation
   void createInstance();
-
-  // Surface
   void createSurface();
-
-  // Device Selection
   void pickPhysicalDevice();
-
-  // Create Logical Device and Queue
   void createLogicalDevice();
-
-  // Create Swapchain
   void createSwapChain();
-
-  // Create Image Views
   void createImageViews();
-
-  // Create Render Pass
   void createRenderPass();
-
-  // Create Graphics Pipeline
+  void createDescriptorSetLayout();
   void createGraphicsPipeline();
-
-  // Create Frame Buffers
   void createFramebuffers();
-
-  // Create Command Pool
   void createCommandPool();
-  
-  // Create Command Buffer
   void createCommandBuffers();
-
-  // Create Vertex Buffer
   void createVertexBuffer();
-
-  // Create Index Buffer
   void createIndexBuffer();
-
+  void createUniformBuffers();
+  void createDescriptorPool();
+  void createDescriptorSets();
   void createSyncObjects();
 
   void mainLoop();
@@ -129,6 +107,7 @@ private:
   VkShaderModule createShaderModule(const std::vector<char> &code);
   void recordCommandBuffer(VkCommandBuffer &commandBuffer, uint32_t imageIndex);
   void copyBuffer(const VkBuffer &srcBuffer, const VkBuffer &dstBuffer, const VkDeviceSize size);
+  void updateUniformBuffer(const uint32_t currentImage);
 private:
   void cleanWindow();
   void cleanVulkan();
@@ -136,6 +115,7 @@ private:
   void cleanInstance();
   void cleanSurface();
   void cleanLogicalDevice();
+  void cleanDescriptorSetLayout();
   void cleanSwapChain();
   void cleanImageViews();
 
@@ -144,15 +124,14 @@ private:
   void cleanFramebuffers();
   void cleanCommandPool();
   void cleanCommandBuffer();
+  void cleanUniformBuffers();
   void cleanVertexBuffer();
   void cleanIndexBuffer();
+  void cleanDescriptorPool();
   void cleanSyncObjects();
 private:
   // GLFW
   decltype(glfwCreateWindow(0, 0, "", nullptr, nullptr)) m_window;
-  
-  // Vulkan
-  VkInstance m_instance;
 
   // WSI related
   // - surface
@@ -165,43 +144,47 @@ private:
   VkExtent2D m_swapchainExtent;
   // - swapchain imageviews
   std::vector<VkImageView> m_swapchainImageViews;
+  // - swapchain frramebuffers
+  std::vector<VkFramebuffer> m_swapchainFramebuffers;
   
-  // Physical device selection related
+  // Vulkan
+  VkInstance m_instance;
+
+  // - Physical device selection related
   VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
   QueueFamilyIndices m_queueFamilyIndices;
 
-  // Logical Device and Queue
+  // - Logical Device and Queue
   VkDevice m_device;
   VkQueue m_graphicQueue;
   VkQueue m_presentQueue;
 
-  // Render Pass
   VkRenderPass m_renderPass;
 
-  // Pipeline Layout
+  // - Pipeline Layout
+  VkDescriptorSetLayout m_descriptorSetLayout;
   VkPipelineLayout m_pipelineLayout;
 
-  // Graphic Pipeline
   VkPipeline m_graphicsPipeline;
-
-  // Framebuffer
-  std::vector<VkFramebuffer> m_swapchainFramebuffers;
-
-  // Command Pool
+  
+  // - Command Buffer
   VkCommandPool m_commandPool;
-
-  // Command Buffer
   std::vector<VkCommandBuffer> m_commandBuffers;
 
-  // Vertex Buffer
   VkBuffer m_vertexBuffer;
   VkDeviceMemory m_vertexBufferMemory;
 
-  // Index Buffer
   VkBuffer m_indexBuffer;
   VkDeviceMemory m_indexBufferMemory;
 
-  // Semaphore
+  std::vector<VkBuffer> m_uniformBuffers;
+  std::vector<VkDeviceMemory> m_uniformBuffersMemory;
+  std::vector<void*> m_uniformBuffersMapped;
+
+  VkDescriptorPool m_descriptorPool;
+  std::vector<VkDescriptorSet> m_descriptorSets;
+
+  // - Semaphore
   std::vector<VkSemaphore> m_imageAvailableSemaphores;
   std::vector<VkSemaphore> m_renderFinishedSemaphores;
   std::vector<VkFence> m_inFlightFences;

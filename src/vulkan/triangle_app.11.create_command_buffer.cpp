@@ -57,6 +57,7 @@ void HelloTriangleApplication::recordCommandBuffer(VkCommandBuffer &commandBuffe
 
     vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer, 0, VK_INDEX_TYPE_UINT16);
 
+    vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipelineLayout, 0, 1, &m_descriptorSets[m_currentFrame], 0, nullptr);
     // `vkCmdDraw`:
     //  - vertexCount
     //  - instanceCount

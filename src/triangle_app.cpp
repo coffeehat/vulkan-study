@@ -26,6 +26,8 @@ void HelloTriangleApplication::drawFrame() {
   vkResetCommandBuffer(m_commandBuffers[m_currentFrame], 0);
   recordCommandBuffer(m_commandBuffers[m_currentFrame], imageIndex);
 
+  updateUniformBuffer(m_currentFrame);
+
   // Submit render command buffer
   VkSubmitInfo submitInfo{};
   submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
