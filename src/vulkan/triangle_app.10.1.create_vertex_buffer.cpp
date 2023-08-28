@@ -1,5 +1,7 @@
 #include "../triangle_app.hpp"
 
+#include <cstring>
+
 #include "buffers/buffer_creation.h"
 #include "buffers/vertex.h"
 

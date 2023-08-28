@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <chrono>
+#include <cstring>
 
 #include "buffers/buffer_creation.h"
 #include "buffers/uniform.h"
