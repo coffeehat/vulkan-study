@@ -57,12 +57,13 @@ add_dependencies(demo shaders)
 
 # For visual studio, because of it will create direction for different configuration
 # We need to explicit copy the spv file to the configuration destination
+set(TEXTURE_BUILD_PATH "${CMAKE_SOURCE_DIR}/textures")
 add_custom_command(TARGET demo POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:demo>/shaders/"
   COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${SHADER_BUILD_PATH}"
     "$<TARGET_FILE_DIR:demo>/shaders"
+  COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:demo>/textures/"
   COMMAND ${CMAKE_COMMAND} -E copy_directory
-    "${SHADER_BUILD_PATH}"
-    "$<TARGET_FILE_DIR:demo>/textures"
-  COMMAND ${CMAKE_COMMAND} -E remove_directory "${SHADER_BUILD_PATH}")
+    "${TEXTURE_BUILD_PATH}"
+    "$<TARGET_FILE_DIR:demo>/textures")
