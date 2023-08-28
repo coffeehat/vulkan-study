@@ -46,6 +46,7 @@ bool HelloTriangleApplication::isDeviceSuitable(const VkPhysicalDevice &physical
 
   if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU &&
       deviceFeatures.geometryShader &&
+      deviceFeatures.samplerAnisotropy &&
       indices.isComplete() &&
       extensionSupported &&
       swapChainAdequate) {

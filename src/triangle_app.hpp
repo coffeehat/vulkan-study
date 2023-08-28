@@ -82,6 +82,7 @@ private:
   void createCommandPool();
   void createTextureImage();
   void createTextureImageView();
+  void createTextureSampler();
   void createCommandBuffers();
   void createVertexBuffer();
   void createIndexBuffer();
@@ -143,6 +144,7 @@ private:
   void cleanCommandPool();
   void cleanTextureImage();
   void cleanTextureImageView();
+  void cleanTextureSampler();
   void cleanUniformBuffers();
   void cleanVertexBuffer();
   void cleanIndexBuffer();
@@ -203,6 +205,7 @@ private:
   VkImage m_textureImage;
   VkDeviceMemory m_textureImageMemory;
   VkImageView m_textureImageView;
+  VkSampler m_textureSampler;
 
   VkDescriptorPool m_descriptorPool;
   std::vector<VkDescriptorSet> m_descriptorSets;
