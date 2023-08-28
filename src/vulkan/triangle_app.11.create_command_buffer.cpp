@@ -23,6 +23,12 @@ void HelloTriangleApplication::recordCommandBuffer(VkCommandBuffer &commandBuffe
     }
 
     // Start a render pass
+    VkClearValue clearValue{};
+    clearValue.color.int32[0] = 0;
+    clearValue.color.int32[1] = 0;
+    clearValue.color.int32[2] = 0;
+    clearValue.color.int32[3] = 0;
+
     VkRenderPassBeginInfo renderPassInfo{};
     renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
     renderPassInfo.renderPass = m_renderPass;
@@ -30,6 +36,9 @@ void HelloTriangleApplication::recordCommandBuffer(VkCommandBuffer &commandBuffe
     renderPassInfo.renderArea.offset = {0, 0};
     renderPassInfo.renderArea.extent = m_swapchainExtent;   // Should match the size of the attachments for best performance
                                                             // Maybe don't need to match the framebuffer size?
+    renderPassInfo.clearValueCount = 1;
+    renderPassInfo.pClearValues = &clearValue;
+
     vkCmdBeginRenderPass(commandBuffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
     vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_graphicsPipeline);

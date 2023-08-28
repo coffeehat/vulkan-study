@@ -1,6 +1,10 @@
 #include "../triangle_app.hpp"
 
 void HelloTriangleApplication::createInstance() {
+  if (enableValidationLayers && !checkValidationLayerSupport()) {
+      throw std::runtime_error("validation layers requested, but not available!");
+  }
+
   VkApplicationInfo appInfo{};
   appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
   appInfo.pApplicationName = "Hello Triangle";
@@ -19,7 +23,13 @@ void HelloTriangleApplication::createInstance() {
 
   createInfo.enabledExtensionCount = extCount;
   createInfo.ppEnabledExtensionNames = exts;
-  createInfo.enabledLayerCount = 0;
+
+  if (enableValidationLayers) {
+      createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+      createInfo.ppEnabledLayerNames = validationLayers.data();
+  } else {
+      createInfo.enabledLayerCount = 0;
+  }
 
   if (vkCreateInstance(&createInfo, nullptr, &m_instance) != VK_SUCCESS) {
     throw std::runtime_error("Failed to create instance!");

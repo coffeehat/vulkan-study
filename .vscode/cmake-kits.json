@@ -1,0 +1,6 @@
+[
+  {
+      "name": "Vulkan",
+      "environmentSetupScript": "/home/eastwind/Documents/vulkan/lib/vulkan/1.3.250.1/setup-env.sh"
+  }
+]

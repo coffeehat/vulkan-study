@@ -32,6 +32,7 @@
 #endif
 
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <optional>
 #include <stdexcept>
@@ -43,6 +44,16 @@ const uint32_t HEIGHT = 600;
 const std::vector<const char*> deviceExtensions {
   VK_KHR_SWAPCHAIN_EXTENSION_NAME
 };
+
+const std::vector<const char*> validationLayers = {
+    "VK_LAYER_KHRONOS_validation"
+};
+
+#ifdef NDEBUG
+    const bool enableValidationLayers = false;
+#else
+    const bool enableValidationLayers = true;
+#endif
 
 struct QueueFamilyIndices {
   std::optional<uint32_t> graphicsFamily;
@@ -111,6 +122,7 @@ private:
     uint32_t *extCount,
     const char ***exts);
 
+  bool checkValidationLayerSupport();
   bool isDeviceSuitable(const VkPhysicalDevice &physicalDevice);
   QueueFamilyIndices findQueueFamilies(const VkPhysicalDevice &physicalDevice);
   bool checkDeviceExtensionSupport(const VkPhysicalDevice &physicalDevice);
@@ -120,6 +132,7 @@ private:
   VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
   VkShaderModule createShaderModule(const std::vector<char> &code);
   void recordCommandBuffer(VkCommandBuffer &commandBuffer, uint32_t imageIndex);
+
 private:
   void cleanWindow();
   void cleanVulkan();
