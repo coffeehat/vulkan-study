@@ -155,7 +155,15 @@ void HelloTriangleApplication::copyBufferToImage(
     endSingleTimeCommands(commandBuffer);
 }
 
+void HelloTriangleApplication::createTextureImageView() {
+    createImageView(m_textureImage, VK_FORMAT_R8G8B8A8_SRGB, &m_textureImageView);
+}
+
 void HelloTriangleApplication::cleanTextureImage() {
     vkDestroyImage(m_device, m_textureImage, nullptr);
     vkFreeMemory(m_device, m_textureImageMemory, nullptr);
+}
+
+void HelloTriangleApplication::cleanTextureImageView() {
+    vkDestroyImageView(m_device, m_textureImageView, nullptr);
 }

@@ -74,13 +74,14 @@ private:
   void pickPhysicalDevice();
   void createLogicalDevice();
   void createSwapChain();
-  void createImageViews();
+  void createSwapchainImageViews();
   void createRenderPass();
   void createDescriptorSetLayout();
   void createGraphicsPipeline();
   void createFramebuffers();
   void createCommandPool();
   void createTextureImage();
+  void createTextureImageView();
   void createCommandBuffers();
   void createVertexBuffer();
   void createIndexBuffer();
@@ -121,6 +122,10 @@ private:
     VkImage                         *image, 
     const uint32_t                  width, 
     const uint32_t                  height);
+  void createImageView(
+    const VkImage &image,
+    const VkFormat &format,
+    VkImageView *imageView);
 private:
   void cleanWindow();
   void cleanVulkan();
@@ -130,13 +135,14 @@ private:
   void cleanLogicalDevice();
   void cleanDescriptorSetLayout();
   void cleanSwapChain();
-  void cleanImageViews();
+  void cleanSwapchainImageViews();
 
   void cleanRenderPass();
   void cleanGraphicsPipeline();
   void cleanFramebuffers();
   void cleanCommandPool();
   void cleanTextureImage();
+  void cleanTextureImageView();
   void cleanUniformBuffers();
   void cleanVertexBuffer();
   void cleanIndexBuffer();
@@ -159,7 +165,7 @@ private:
   std::vector<VkImageView> m_swapchainImageViews;
   // - swapchain frramebuffers
   std::vector<VkFramebuffer> m_swapchainFramebuffers;
-  
+
   // Vulkan
   VkInstance m_instance;
 
@@ -179,7 +185,7 @@ private:
   VkPipelineLayout m_pipelineLayout;
 
   VkPipeline m_graphicsPipeline;
-  
+
   // - Command Buffer
   VkCommandPool m_commandPool;
   std::vector<VkCommandBuffer> m_commandBuffers;
@@ -196,6 +202,7 @@ private:
 
   VkImage m_textureImage;
   VkDeviceMemory m_textureImageMemory;
+  VkImageView m_textureImageView;
 
   VkDescriptorPool m_descriptorPool;
   std::vector<VkDescriptorSet> m_descriptorSets;

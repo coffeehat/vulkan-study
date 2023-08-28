@@ -14,7 +14,7 @@ void HelloTriangleApplication::initVulkan() {
   std::cout << "Run Create Swap Chain" << std::endl;
   createSwapChain();
   std::cout << "Run Create Image Views" << std::endl;
-  createImageViews();
+  createSwapchainImageViews();
   std::cout << "Run Create Render Pass" << std::endl;
   createRenderPass();
   std::cout << "Create Descriptor Set Layout" << std::endl;
@@ -27,6 +27,8 @@ void HelloTriangleApplication::initVulkan() {
   createCommandPool();
   std::cout << "Run Create Texture Image" << std::endl;
   createTextureImage();
+  std::cout << "Run Create Texture Image View" << std::endl;
+  createTextureImageView();
   std::cout << "Run Create Vertex Buffer" << std::endl;
   createVertexBuffer();
   std::cout << "Run Create Index Buffer" << std::endl;
@@ -49,7 +51,8 @@ void HelloTriangleApplication::cleanVulkan() {
   cleanFramebuffers();
   cleanGraphicsPipeline();
   cleanRenderPass();
-  cleanImageViews();
+  cleanSwapchainImageViews();
+  cleanTextureImageView();
   cleanTextureImage();
   cleanDescriptorPool();
   cleanDescriptorSetLayout();
