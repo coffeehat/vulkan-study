@@ -60,6 +60,7 @@ void HelloTriangleApplication::cleanVulkan() {
   cleanDescriptorPool();
   cleanDescriptorSetLayout();
   cleanSwapChain();
+  cleanUniformBuffers();
   cleanIndexBuffer();
   cleanVertexBuffer();
   cleanLogicalDevice();

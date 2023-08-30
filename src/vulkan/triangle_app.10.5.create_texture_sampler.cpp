@@ -30,5 +30,5 @@ void HelloTriangleApplication::createTextureSampler() {
 }
 
 void HelloTriangleApplication::cleanTextureSampler() {
-
+    vkDestroySampler(m_device, m_textureSampler, nullptr);
 }
