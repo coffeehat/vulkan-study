@@ -7,12 +7,19 @@
 
 void HelloTriangleApplication::createTextureImage() {
     int texWidth, texHeight, texChannels;
+#ifdef NDEBUG
     stbi_uc *pixels = stbi_load(
         "textures/texture.jpg", 
         &texWidth, &texHeight, &texChannels, 
         STBI_rgb_alpha);
+#else
+    stbi_uc *pixels = stbi_load(
+        "build/textures/texture.jpg", 
+        &texWidth, &texHeight, &texChannels, 
+        STBI_rgb_alpha);
+#endif
     VkDeviceSize imageSize = texWidth * texHeight * 4;
-
+    
     if (!pixels) {
         throw std::runtime_error("failed to load texture image!");
     }
@@ -108,7 +115,7 @@ void HelloTriangleApplication::transitionImageLayout(
 
     vkCmdPipelineBarrier(
         commandBuffer,
-        0 /* TODO */, 0 /* TODO */,
+        sourceStage, destinationStage,
         0,
         0, nullptr,
         0, nullptr,

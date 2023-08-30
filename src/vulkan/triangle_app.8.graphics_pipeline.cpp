@@ -25,8 +25,13 @@ static std::vector<char> readFile(const std::string &filename) {
 
 void HelloTriangleApplication::createGraphicsPipeline() {
     // Create Shader Module
+#ifdef NDEBUG
     auto vertShaderCode = readFile("shaders/vert.spv");
     auto fragShaderCode = readFile("shaders/frag.spv");
+#else
+    auto vertShaderCode = readFile("build/shaders/vert.spv");
+    auto fragShaderCode = readFile("build/shaders/frag.spv");
+#endif
 
     VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
     VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);
@@ -76,25 +81,25 @@ void HelloTriangleApplication::createGraphicsPipeline() {
     inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
     inputAssembly.primitiveRestartEnable = VK_FALSE;
 
-    // // Viewports and scissors
-    // VkViewport viewport{};
-    // viewport.x = 0.0f;
-    // viewport.y = 0.0f;
-    // viewport.width = (float) m_swapchainExtent.width;
-    // viewport.height = (float) m_swapchainExtent.height;
-    // viewport.minDepth = 0.0f;
-    // viewport.maxDepth = 1.0f;
+    // Viewports and scissors
+    VkViewport viewport{};
+    viewport.x = 0.0f;
+    viewport.y = 0.0f;
+    viewport.width = (float) m_swapchainExtent.width;
+    viewport.height = (float) m_swapchainExtent.height;
+    viewport.minDepth = 0.0f;
+    viewport.maxDepth = 1.0f;
 
-    // VkRect2D scissor{};
-    // scissor.offset = {0, 0};
-    // scissor.extent = m_swapchainExtent;
+    VkRect2D scissor{};
+    scissor.offset = {0, 0};
+    scissor.extent = m_swapchainExtent;
 
-    // VkPipelineViewportStateCreateInfo viewportState{};
-    // viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
-    // viewportState.viewportCount = 1;
-    // viewportState.pViewports = &viewport;
-    // viewportState.scissorCount = 1;
-    // viewportState.pScissors = &scissor;
+    VkPipelineViewportStateCreateInfo viewportState{};
+    viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
+    viewportState.viewportCount = 1;
+    viewportState.pViewports = &viewport;
+    viewportState.scissorCount = 1;
+    viewportState.pScissors = &scissor;
 
     VkPipelineRasterizationStateCreateInfo rasterizer{};
     rasterizer.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
@@ -176,6 +181,7 @@ void HelloTriangleApplication::createGraphicsPipeline() {
     pipelineInfo.pDepthStencilState = nullptr; // Optional
     pipelineInfo.pColorBlendState = &colorBlending;
     pipelineInfo.pDynamicState = &dynamicState;
+    pipelineInfo.pViewportState = &viewportState;
     // Pipeline Layout
     pipelineInfo.layout = m_pipelineLayout;
     // Render Pass
