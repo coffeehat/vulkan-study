@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <limits>
 
 void HelloTriangleApplication::createSwapChain() {
   VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(m_surfaceProperties.formats);
